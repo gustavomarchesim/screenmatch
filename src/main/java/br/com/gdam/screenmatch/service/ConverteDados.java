@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConverteDados implements iConverteDados {
-  // mapper faz a conversao no Jackson
   private ObjectMapper mapper = new ObjectMapper();
 
   @Override
