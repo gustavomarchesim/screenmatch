@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import br.com.gdam.screenmatch.model.DadosSerie;
 import br.com.gdam.screenmatch.model.DadosTemporada;
 import br.com.gdam.screenmatch.model.Serie;
+import br.com.gdam.screenmatch.repository.SerieRepository;
 import br.com.gdam.screenmatch.service.ConsumoApi;
 import br.com.gdam.screenmatch.service.ConverteDados;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -25,7 +25,12 @@ public class Principal {
 
   private final String ENDERECO = "https://www.omdbapi.com/?t=";
   private final String API_KEY = "&apikey=" + apiKey;
-  private List<DadosSerie> dadosSeries = new ArrayList<>();
+
+  private SerieRepository repository;
+
+  public Principal(SerieRepository repository) {
+    this.repository = repository;
+  }
 
   public void exibeMenu() {
     var opcao = -1;
@@ -63,8 +68,8 @@ public class Principal {
 
   public void buscarSerieWeb() {
     DadosSerie dados = getDadosSerie();
-    dadosSeries.add(dados);
-    System.out.println(dados);
+    Serie serie = new Serie(dados);
+    repository.save(serie);
   }
 
   private DadosSerie getDadosSerie() {
@@ -91,10 +96,7 @@ public class Principal {
   }
 
   private void listaTodasSeries() {
-    List<Serie> series = dadosSeries.stream()
-        .map(d -> new Serie(d))
-        .collect(Collectors.toList());
-
+    List<Serie> series = repository.findAll();
     series.stream()
         .sorted(Comparator.comparing(Serie::getGeneros))
         .forEach(System.out::println);
