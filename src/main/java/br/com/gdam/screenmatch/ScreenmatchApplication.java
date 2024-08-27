@@ -1,5 +1,7 @@
 package br.com.gdam.screenmatch;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +27,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Locale.setDefault(Locale.US);
 		Principal principal = new Principal(repository);
 		principal.exibeMenu();
 	}

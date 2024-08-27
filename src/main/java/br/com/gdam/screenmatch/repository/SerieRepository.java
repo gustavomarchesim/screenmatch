@@ -10,5 +10,7 @@ import br.com.gdam.screenmatch.model.Serie;
 public interface SerieRepository extends JpaRepository<Serie, Long> {
     Optional<Serie> findByTituloContainingIgnoreCase(String titulo);
 
-    List<Serie> findByAtoresContainingIgnoreCase(String nomeAtor);
+    List<Serie> findByAtoresContainingIgnoreCaseAndAvaliacaoIsGreaterThanEqual(String nomeAtor, Double avaliacao);
+
+    List<Serie> findTop5ByOrderByAvaliacaoDesc();
 }
