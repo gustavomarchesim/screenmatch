@@ -119,7 +119,8 @@ public class Principal {
         System.out.println("Insira o ano da busca");
         var anoBusca = sc.nextInt();
         List<Episodio> buscaEpisodiosPorData = repository.buscaEpisodioPorData(anoBusca);
-        buscaEpisodiosPorData.forEach(System.out::println);
+        buscaEpisodiosPorData.forEach(E -> System.out
+                .println("Titulo: " + E.getSerie().getTitulo() + " - " + E.getTitulo() + ": " + E.getDataLancamento()));
     }
 
     private void buscaTopEpisodiosProSerie() {
